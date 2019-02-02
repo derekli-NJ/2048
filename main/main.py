@@ -1,82 +1,23 @@
 from tkinter import *
 from game_logic import Game
-
-chance_of_4 = 1/12
+import sys
 
 def init(data):
-    data.game = Game(0)
+    data.game = Game(0, 4)
     data.width = 400
     data.height = 400
 
-
-def printBoard(initBoard):
-    for row in range(len(initBoard)):
-        print (initBoard[row])
-
-def createStartBoard(initBoard):
-    # uses board of all 0's and creates the starting board with 2 pieces
-    for i in range(2):
-        randRow = random.randint(0,len(initBoard)-1)
-        randCol = random.randint(0,len(initBoard[0])-1)
-        if initBoard[randRow][randCol] == 0:
-            if i == 0:
-                initBoard[randRow][randCol] = 2
-            else:
-                initBoard[randRow][randCol] = random.choice([2,4])
-    return initBoard
-
-def createPiece(data):
-    ret = data.gameBoard.copy()
-    remainingSpots = []
-    for row in range(0, ret.row):
-        for col in range(0, ret.col):
-            if data.gameBoard[row][col]==0:
-                lastRow = row
-                lastCol = col
-                remainingSpots+=[row, col]
-                if remainingSpots >= 1:
-                    break
-    if remainingSpots == 0:
-        return False
-    if remainingSpots == 1:
-        data.gameBoard[lastRow][lastCol] = random.choice([2,4])
-        if isLegal(data):
-            pass    
-        else:
-            print('You Lost!')
-        # data.gameOver = True
-    else:
-        newPiece = True
-        while newPiece:
-            randRow = random.randint(0,data.row-1)
-            randCol = random.randint(0,data.col-1)
-            if data.gameBoard[randRow][randCol]==0:
-                data.gameBoard[randRow][randCol] = random.choice([2,4])
-                newPiece = False
+def spawn_piece(data):
+    data.game.spawn_piece()
 
 def moveUp(data):
-    for col in range(0,data.col):
-        if data.gameBoard[0][col] == 0:
-            for row in range(0,data.row):
-                if data.gameBoard[row][col] != 0:
-                    data.gameBoard[0][col] = data.gameBoard[row][col]
-                    data.gameBoard[row][col] = 0
+    pass
 
 def moveLeft(data):
-    for row in range(0,data.row):
-        if data.gameBoard[row][0] == 0:
-            for col in range(0,data.col):
-                if data.gameBoard[row][col] != 0:
-                    data.gameBoard[row][0] = data.gameBoard[row][col]
-                    data.gameBoard[row][col] = 0
+    pass
 
 def moveRight(data):
-    for row in range(0,data.row):
-        if data.gameBoard[row][data.col-1] == 0:
-            for col in range(0,data.col):
-                if data.gameBoard[row][col] != 0:
-                    data.gameBoard[row][data.col-1] = data.gameBoard[row][col]
-                    data.gameBoard[row][col] = 0
+    pass
 
 def moveDown(data):
     for col in range(0,data.col):
@@ -100,9 +41,9 @@ def isLegal(data):
     return True
 
                 
-
+# TODO ???
 def runGame():
-    printBoard(init())
+    pass
 
 
 def mousePressed(event,data):
@@ -121,23 +62,24 @@ def keyPressed(event,data):
     if event.keysym == "Down":
         moveDown(data)
         print ('Down')   
-    data.gameBoard = createPiece(data)
-    isLegal(data)
-
+    data.game = spawn_piece(data)
+    if not data.game.has_valid_move():
+        sys.exit()
 
 
 def drawGameBoard(canvas,data):
     # draws gameboard
     canvas.create_rectangle(0,0,data.width,data.height,fill = 'gray')
-    for row in range(data.row):
+    game_board = data.game.get_board()
+    for row in range(len(game_board)):
         canvas.create_line(0,data.height*(row/4),
                            data.width,data.height*(row/4),width = 5, fill = 'black')
-        for col in range(data.col):
+        for col in range(len(game_board)):
             canvas.create_line(data.width * (col/4),
                                0,data.width * (col/4),data.height,width = 5, fill = 'black')
-            if col < data.col and row <data.row:
-                canvas.create_text(data.width * ((2*col+1)/8),data.height * ((2*row+1)/8),
-                                   text = str(data.gameBoard[row][col]), font = ("Avenir",40))
+            #if col < data.col and row <data.row:
+            canvas.create_text(data.width * ((2*col+1)/8),data.height * ((2*row+1)/8),
+                                   text = str(game_board[row][col]), font = ("Avenir",40))
 
 
 def redrawAll(canvas,data):

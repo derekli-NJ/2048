@@ -5,12 +5,12 @@ default_chance_of_4 = 1/15
 
 class Game(object):
 
-    def __init__(self, seed, board_size, four_chance = default_chance_of_4):
+    def __init__(self, seed, board_size, four_chance = default_chance_of_4, starting_tiles = 2):
         random.seed(seed) # TODO: Initialize and store random seeds in a better way
         self.board_size = board_size
         self.four_chance = four_chance
         self.board = [([0] * self.board_size) for i in range(self.board_size)]
-        for i in range(0, 2):
+        for i in range(0, starting_tiles):
             self.spawn_tile()
     
 
@@ -29,17 +29,8 @@ class Game(object):
         Picks an empty tile to spawn a new tile in.
         Returns true on success and false on failure.
         """
-
-        # Find all of the empty tiles
-        empty_squares = [] # List of (row, col) coordinates that are empty in the grid.
-        for x, y in np.ndindex((self.board_size, self.board_size)):
-            tile = self.board[x][y]
-            if tile == 0:
-              empty_squares.append([x, y])
-
+        empty_squares = get_empty_squares(self.get_board())
         chosen_square = empty_squares[random.randint(0, len(empty_squares) - 1)]
-        print(empty_squares)
-        print(chosen_square)
         next_num = 2
         if random.random() > self.four_chance:
             next_num = 4
@@ -93,11 +84,34 @@ class Game(object):
             move_left(self,row)
 
 
+# Helper functions
+def get_empty_squares(board):
+    """
+    Finds all the empty tiles in the given board, and returns them in a list
+    of (x, y) coordinates.
+    """
+    empty_squares = [] # List of (row, col) coordinates that are empty in the grid.
+    for x, y in np.ndindex((len(board), len(board))):
+        tile = board[x][y]
+        if tile == 0:
+            empty_squares.append([x, y])
+    return empty_squares
 
+def has_valid_move(board):
+    """
+    Helper function to test if the given board has a valid move.
+    """
+    for row in range(len(board)):
+        for col in range(len(board)):
+            # If an empty space is found, immediately return true
+            if board[row][col] == 0:
+                return True
 
+            # If not at edge of board:
+            if (not row == len(board) - 1) and (board[row][col] == board[row + 1][col]):
+                return True # If there are two vertically adjacent matching tiles
+            if (not col == len(board) - 1) and (board[row][col] == board[row][col + 1]):
+                return True
 
-
-
-
-
+    return False
 
