@@ -2,6 +2,8 @@ import sys
 sys.path.append('../')
 
 from game_logic import Game
+from game_logic import has_valid_move
+from game_logic import get_empty_squares
 import functools
 
 empty_board = [[0, 0, 0, 0],
@@ -79,7 +81,7 @@ def test_spawn_tile(game):
 def test_get_empty_squares(game):
 	print("Running test_get_empty_squares...")
 	game.board = test_board
-	result = game.get_empty_squares()
+	result = get_empty_squares(game.get_board())
 
 	#TODO: Too lazy to optimize test cases
 	for square in result:
@@ -91,13 +93,13 @@ def test_get_empty_squares(game):
 def test_has_valid_move(game):
 	print("Running test_has_valid_move...")
 	game.board = stuck_board
-	assert (not game.has_valid_move()), "failed has_valid_move(): Found valid move for stuck board"
+	assert (not has_valid_move(game.get_board())), "failed has_valid_move(): Found valid move for stuck board"
 	game.board = test_board
-	assert game.has_valid_move(), "failed has_valid_move(): Could not find move for: test_board"
+	assert has_valid_move(game.get_board()), "failed has_valid_move(): Could not find move for: test_board"
 	game.board = almost_stuck_board_1
-	assert game.has_valid_move(), "failed has_valid_move(): Could not find move for: almost_stuck_board_1"
+	assert has_valid_move(game.get_board()), "failed has_valid_move(): Could not find move for: almost_stuck_board_1"
 	game.board = almost_stuck_board_2
-	assert game.has_valid_move(), "failed has_valid_move(): Could not find move for: almost_stuck_board_2"
+	assert has_valid_move(game.get_board()), "failed has_valid_move(): Could not find move for: almost_stuck_board_2"
 
 	print("Passed test_has_valid_move!")
 
