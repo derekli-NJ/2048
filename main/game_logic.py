@@ -29,26 +29,29 @@ class Game(object):
         Picks an empty tile to spawn a new tile in.
         Returns true on success and false on failure.
         """
+        empty_squares = self.get_empty_squares(self.get_board())
+        chosen_square = empty_squares[random.randint(0, len(empty_squares) - 1)]
+        next_num = 2
+        if random.random() > self.four_chance:
+          next_num = 4
+        self.get_board()[chosen_square[0]][chosen_square[1]] = next_num
+        if len(empty_squares) == 1 and not self.has_valid_move(self.get_board()):
+            return False
+        return True;
 
-        # Find all of the empty tiles
+    def get_empty_squares(self, board):
+        """
+        Finds all the empty tiles in the given board, and returns them in a list
+        of (x, y) coordinates.
+        """
         empty_squares = [] # List of (row, col) coordinates that are empty in the grid.
         for x, y in np.ndindex((self.board_size, self.board_size)):
             tile = self.board[x][y]
             if tile == 0:
               empty_squares.append([x, y])
+        return empty_squares
 
-        chosen_square = empty_squares[random.randint(0, len(empty_squares) - 1)]
-        print(empty_squares)
-        print(chosen_square)
-        next_num = 2
-        if random.random() > self.four_chance:
-          next_num = 4
-        self.get_board()[chosen_square[0]][chosen_square[1]] = next_num
-        if len(empty_squares) == 1 and not has_valid_move(self.get_board()):
-            return False
-        return True;
-
-    def has_valid_move(board):
+    def has_valid_move(self, board):
         """
         Helper function to test if the given board has a valid move.
         """
