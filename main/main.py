@@ -4,7 +4,7 @@ from game_logic import Game
 chance_of_4 = 1/12
 
 def init(data):
-    data.game_board = Game(0)
+    data.game = Game(0)
     data.width = 400
     data.height = 400
 
