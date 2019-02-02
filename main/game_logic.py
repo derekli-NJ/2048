@@ -40,31 +40,31 @@ class Game(object):
         return True;
 
 def get_empty_squares(board):
-        """
-        Finds all the empty tiles in the given board, and returns them in a list
-        of (x, y) coordinates.
-        """
-        empty_squares = [] # List of (row, col) coordinates that are empty in the grid.
-        for x, y in np.ndindex((len(board), len(board))):
-            tile = board[x][y]
-            if tile == 0:
-                empty_squares.append([x, y])
-        return empty_squares
+    """
+    Finds all the empty tiles in the given board, and returns them in a list
+    of (x, y) coordinates.
+    """
+    empty_squares = [] # List of (row, col) coordinates that are empty in the grid.
+    for x, y in np.ndindex((len(board), len(board))):
+        tile = board[x][y]
+        if tile == 0:
+            empty_squares.append([x, y])
+    return empty_squares
 
 def has_valid_move(board):
-        """
-        Helper function to test if the given board has a valid move.
-        """
-        for row in range(len(board)):
-            for col in range(len(board)):
-                # If an empty space is found, immediately return true
-                if board[row][col] == 0:
-                    return True
+    """
+    Helper function to test if the given board has a valid move.
+    """
+    for row in range(len(board)):
+        for col in range(len(board)):
+            # If an empty space is found, immediately return true
+            if board[row][col] == 0:
+                return True
 
-                # If not at edge of board:
-                if (not row == len(board) - 1) and (board[row][col] == board[row + 1][col]):
-                    return True # If there are two vertically adjacent matching tiles
-                if (not col == len(board) - 1) and (board[row][col] == board[row][col + 1]):
-                    return True
+            # If not at edge of board:
+            if (not row == len(board) - 1) and (board[row][col] == board[row + 1][col]):
+                return True # If there are two vertically adjacent matching tiles
+            if (not col == len(board) - 1) and (board[row][col] == board[row][col + 1]):
+                return True
 
-        return False
+    return False
