@@ -47,11 +47,25 @@ def test_spawn_tile(game):
 	assert (tiles_post == tiles_pre + 2) or (tiles_post == tiles_pre + 4), "failed spawn_tile(): Did not increase total tile sum"
 	print("Passed test_spawn_tile!")
 
+def test_move_left(game):
+	print("Running test_move_left...")
+	# test_board = [[0, 0, 2, 2],
+	# 			  [0, 2, 0, 0],
+	# 			  [0, 0, 2, 0],
+	# 			  [2, 0, 2, 2]]
+	game.board = test_board
+	# print (game.board[0])
+	assert(game.check_move_left(0)==[4,0,0,0])
+	assert(game.check_move_left(1)==[2,0,0,0])
+	assert(game.check_move_left(3)==[4,2,0,0])
+	print("Passed!")
+
 ##  
 # Run the tests
 ##
 test_game = Game(0, 4)
 
+test_move_left(test_game)
 test_get_board(test_game)
 test_clear_board(test_game)
 test_spawn_tile(test_game)

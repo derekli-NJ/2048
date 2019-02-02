@@ -79,15 +79,15 @@ def moveRight(data):
                     data.gameBoard[row][col] = 0
 
 def moveDown(data):
-    # for col in range(0,data.col):
-    #     if data.gameBoard[data.row-1][col] == 0:
-    #         for row in range(0,data.row):
-    #             if data.gameBoard[row][col] != 0:
-    #                 print (row,col)
-    #                 data.gameBoard[data.row-1][col] = data.gameBoard[row][col]
-    #                 if data.gameBoard[data.row-1][col] == 0:
-    #                     data.gameBoard[row][col] = 0
-    # print (data.gameBoard)
+    for col in range(0,data.col):
+        if data.gameBoard[data.row-1][col] == 0:
+            for row in range(0,data.row):
+                if data.gameBoard[row][col] != 0:
+                    print (row,col)
+                    data.gameBoard[data.row-1][col] = data.gameBoard[row][col]
+                    if data.gameBoard[data.row-1][col] == 0:
+                        data.gameBoard[row][col] = 0
+    print (data.gameBoard)
     pass
 
 def isLegal(data):

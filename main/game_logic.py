@@ -42,7 +42,7 @@ class Game(object):
         print(chosen_square)
         next_num = 2
         if random.random() > self.four_chance:
-          next_num = 4
+            next_num = 4
         self.get_board()[chosen_square[0]][chosen_square[1]] = next_num
         if len(empty_squares) == 1 and not has_valid_move(self.get_board()):
             return False
@@ -55,3 +55,49 @@ class Game(object):
         for row in len(board):
             for col in len(board):
               pass
+
+
+
+    def check_move_left(self,row):
+        # print (self.board)
+        last = 0
+        current = 1
+        print (self.board[row])
+        while (current<(self.board_size)):
+            print (self.board[row][current])
+            if self.board[row][current] != 0:
+                if self.board[row][current] == self.board[row][last]:
+                    self.combine_left(row,current,last)
+                    last += 1
+                else:
+                    if self.board[row][last] != 0:
+                        last += 1
+
+                    self.move_left(row,current,last)
+            current += 1
+        return (self.board[row])
+
+    def combine_left(self,row,current,last):
+        self.board[row][last]+=self.board[row][current]
+        self.board[row][current] = 0
+        pass
+
+    def move_left(self,row,current,last):
+        self.board[row][last] = self.board[row][current]
+        self.board[row][current] = 0
+        pass
+
+
+    def num_rows_move(self):
+        for row in range(0,len(self.board[0])):
+            move_left(self,row)
+
+
+
+
+
+
+
+
+
+
