@@ -19,6 +19,12 @@ empty_squares = [[0, 0], [0, 1], [1, 0], [1, 2], [1, 3], [2, 0], [2, 1], [2, 3],
 def sum_tiles(board):
 	return functools.reduce(lambda x, y: x + sum(y), board, 0)
 
+def test_init(game):
+	print("Running test_init...")
+	print(game.get_board())
+	assert (sum_tiles(game.get_board()) >= 4), "failed __init__(): Did not initialize tiles"
+	print("Passed test_init!")
+
 def test_get_board(game):
 	print("Running test_get_board...")
 	board = game.get_board()
@@ -42,8 +48,13 @@ def test_clear_board(game):
 def test_spawn_tile(game):
 	print("Running test_spawn_tile...")
 	game.board = test_board
+	print("Pre:")
+	print(game.get_board())
+	print("-----")
 	tiles_pre = sum_tiles(game.get_board())
 	game.spawn_tile()
+	print("Post:")
+	print(game.get_board())
 	new_board = game.get_board()
 	tiles_post = sum_tiles(game.get_board())
 	assert (tiles_post == tiles_pre + 2) or (tiles_post == tiles_pre + 4), "failed spawn_tile(): Did not increase total tile sum"
@@ -66,6 +77,7 @@ def test_get_empty_squares(game):
 ##
 test_game = Game(0, 4)
 
+test_init(test_game)
 test_get_board(test_game)
 test_clear_board(test_game)
 test_spawn_tile(test_game)
