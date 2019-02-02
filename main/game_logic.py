@@ -29,17 +29,17 @@ class Game(object):
         Picks an empty tile to spawn a new tile in.
         Returns true on success and false on failure.
         """
-        empty_squares = self.get_empty_squares(self.get_board())
+        empty_squares = self.get_empty_squares()
         chosen_square = empty_squares[random.randint(0, len(empty_squares) - 1)]
         next_num = 2
         if random.random() < self.four_chance:
           next_num = 4
         self.get_board()[chosen_square[0]][chosen_square[1]] = next_num
-        if len(empty_squares) == 1 and not self.has_valid_move(self.get_board()):
+        if len(empty_squares) == 1 and not self.has_valid_move():
             return False
         return True;
 
-    def get_empty_squares(self, board):
+    def get_empty_squares(self):
         """
         Finds all the empty tiles in the given board, and returns them in a list
         of (x, y) coordinates.
@@ -51,11 +51,22 @@ class Game(object):
                 empty_squares.append([x, y])
         return empty_squares
 
-    def has_valid_move(self, board):
+    def has_valid_move(self):
         """
         Helper function to test if the given board has a valid move.
         """
 
-        for row in range(len(board)):
+        for row in range(len(self.board)):
+            board = self.board # For convenience
             for col in range(len(board)):
-                pass
+                # If an empty space is found, immediately return true
+                if board[row][col] == 0:
+                    return True
+
+                # If not at edge of board:
+                if (not row == len(board) - 1) and (board[row][col] == board[row + 1][col]):
+                    return True # If there are two vertically adjacent matching tiles
+                if (not col == len(board) - 1) and (board[row][col] == board[row][col + 1]):
+                    return True
+
+        return False

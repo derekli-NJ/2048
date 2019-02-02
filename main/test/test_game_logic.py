@@ -14,6 +14,21 @@ test_board = [[0, 0, 2, 2],
 			  [0, 0, 2, 0],
 			  [2, 0, 2, 2]]
 
+stuck_board = [[2, 4, 2, 4],
+			   [4, 8, 4, 2],
+			   [8, 4, 2, 8],
+			   [2, 8, 4, 2]]
+
+almost_stuck_board_1 = [[2, 4, 2, 4],
+						[4, 8, 4, 2],
+						[8, 2, 2, 8],
+						[2, 8, 4, 2]]
+
+almost_stuck_board_2 = [[2, 4, 2, 4],
+						[4, 8, 4, 8],
+						[8, 4, 2, 8],
+						[2, 8, 4, 2]]
+
 empty_squares = [[0, 0], [0, 1], [1, 0], [1, 2], [1, 3], [2, 0], [2, 1], [2, 3], [3, 1]]
 
 def sum_tiles(board):
@@ -58,12 +73,13 @@ def test_spawn_tile(game):
 	new_board = game.get_board()
 	tiles_post = sum_tiles(game.get_board())
 	assert (tiles_post == tiles_pre + 2) or (tiles_post == tiles_pre + 4), "failed spawn_tile(): Did not increase total tile sum"
+	# TODO: more tests
 	print("Passed test_spawn_tile!")
 
 def test_get_empty_squares(game):
 	print("Running test_get_empty_squares...")
 	game.board = test_board
-	result = game.get_empty_squares(game.get_board())
+	result = game.get_empty_squares()
 
 	#TODO: Too lazy to optimize test cases
 	for square in result:
@@ -71,6 +87,19 @@ def test_get_empty_squares(game):
 		assert contains, "failed get_empty_squares(): Unexpected output"
 
 	print("Passed test_get_empty_squares!")
+
+def test_has_valid_move(game):
+	print("Running test_has_valid_move...")
+	game.board = stuck_board
+	assert (not game.has_valid_move()), "failed has_valid_move(): Found valid move for stuck board"
+	game.board = test_board
+	assert game.has_valid_move(), "failed has_valid_move(): Could not find move for: test_board"
+	game.board = almost_stuck_board_1
+	assert game.has_valid_move(), "failed has_valid_move(): Could not find move for: almost_stuck_board_1"
+	game.board = almost_stuck_board_2
+	assert game.has_valid_move(), "failed has_valid_move(): Could not find move for: almost_stuck_board_2"
+
+	print("Passed test_has_valid_move!")
 
 ##  
 # Run the tests
@@ -82,3 +111,4 @@ test_get_board(test_game)
 test_clear_board(test_game)
 test_spawn_tile(test_game)
 test_get_empty_squares(test_game)
+test_has_valid_move(test_game)
