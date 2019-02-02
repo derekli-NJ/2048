@@ -1,6 +1,7 @@
 from tkinter import *
 import random
 
+chance_of_4 = 1/12
 
 def init(data):
     initBoard = [[0,0,0,0],
@@ -31,13 +32,18 @@ def createStartBoard(initBoard):
     return initBoard
 
 def createPiece(data):
-    remainingSpots = 0
-    for row in range(0, data.row):
-        for col in range(0, data.col):
+    ret = data.gameBoard.copy()
+    remainingSpots = []
+    for row in range(0, ret.row):
+        for col in range(0, ret.col):
             if data.gameBoard[row][col]==0:
                 lastRow = row
                 lastCol = col
-                remainingSpots+=1
+                remainingSpots+=[row, col]
+                if remainingSpots >= 1:
+                    break
+    if remainingSpots == 0:
+        return False
     if remainingSpots == 1:
         data.gameBoard[lastRow][lastCol] = random.choice([2,4])
         if isLegal(data):
@@ -120,7 +126,7 @@ def keyPressed(event,data):
     if event.keysym == "Down":
         moveDown(data)
         print ('Down')   
-    createPiece(data)
+    data.gameBoard = createPiece(data)
     isLegal(data)
 
 
