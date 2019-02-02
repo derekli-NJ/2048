@@ -12,9 +12,10 @@ class Game(object):
                           [0,0,0,0]]
         for i in range(0, 2):
             self.spawn_tile()
+    
 
-    def self.get_board(self):
+    def get_board(self):
         return self.board
     
-    def self.spawn_tile(self):
-        
+    def spawn_tile(self):
+        pass
