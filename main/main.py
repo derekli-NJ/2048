@@ -8,28 +8,19 @@ def init(data):
     data.height = 400
 
 def spawn_piece(data):
-    data.game.spawn_piece()
+    data.game.spawn_tile()
 
 def moveUp(data):
-    pass
+    return data.game.slide_up()
 
 def moveLeft(data):
-    pass
+    return data.game.slide_left()
 
 def moveRight(data):
-    pass
+    return data.game.slide_right()
 
 def moveDown(data):
-    for col in range(0,data.col):
-        if data.gameBoard[data.row-1][col] == 0:
-            for row in range(0,data.row):
-                if data.gameBoard[row][col] != 0:
-                    print (row,col)
-                    data.gameBoard[data.row-1][col] = data.gameBoard[row][col]
-                    if data.gameBoard[data.row-1][col] == 0:
-                        data.gameBoard[row][col] = 0
-    print (data.gameBoard)
-    pass
+    return data.game.slide_down()
 
 def isLegal(data):
     for row in range(0,data.row):
@@ -50,19 +41,21 @@ def mousePressed(event,data):
     pass
 
 def keyPressed(event,data):
+    valid = False
     if event.keysym == "Up":
         print ('Up')
-        moveUp(data)
+        valid = moveUp(data)
     if event.keysym == "Left":
         print ('Left')
-        moveLeft(data)
+        valid = moveLeft(data)
     if event.keysym == "Right":
         print ('Right')
-        moveRight(data)
+        valid = moveRight(data)
     if event.keysym == "Down":
-        moveDown(data)
         print ('Down')   
-    data.game = spawn_piece(data)
+        valid = moveDown(data)
+    if valid:
+        spawn_piece(data)
     if not data.game.has_valid_move():
         sys.exit()
 

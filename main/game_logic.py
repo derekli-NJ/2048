@@ -32,56 +32,151 @@ class Game(object):
         empty_squares = get_empty_squares(self.get_board())
         chosen_square = empty_squares[random.randint(0, len(empty_squares) - 1)]
         next_num = 2
-        if random.random() > self.four_chance:
+        if random.random() < self.four_chance:
             next_num = 4
         self.get_board()[chosen_square[0]][chosen_square[1]] = next_num
         if len(empty_squares) == 1 and not has_valid_move(self.get_board()):
             return False
         return True;
 
-    def has_valid_move(board):
-        """
-        Helper function to test if the given board has a valid move.
-        """
-        for row in len(board):
-            for col in len(board):
-              pass
-
-
 
     def check_move_left(self,row):
-        # print (self.board)
+        """
+        Slide a single row of tiles to the left, and return whether any tiles were moved.
+        """
         last = 0
         current = 1
-        print (self.board[row])
-        while (current<(self.board_size)):
-            print (self.board[row][current])
+        valid = False
+        while (current < (self.board_size)):
+            #print (self.board[row][current])
             if self.board[row][current] != 0:
                 if self.board[row][current] == self.board[row][last]:
-                    self.combine_left(row,current,last)
+                    self.combine(row, current, row, last)
                     last += 1
+                    valid = True
                 else:
                     if self.board[row][last] != 0:
                         last += 1
-
-                    self.move_left(row,current,last)
+                    if current != last:
+                        valid = True
+                    self.move(row, current, row, last)
             current += 1
-        return (self.board[row])
+        return valid
 
-    def combine_left(self,row,current,last):
-        self.board[row][last]+=self.board[row][current]
-        self.board[row][current] = 0
+    def check_move_right(self,row):
+        """
+        Slide a single row of tiles to the right, and return whether any tiles were moved.
+        """
+        last = self.board_size - 1
+        current = last - 1
+        valid = False
+        while (current >= 0):
+            #print (self.board[row][current])
+            if self.board[row][current] != 0:
+                if self.board[row][current] == self.board[row][last]:
+                    self.combine(row, current, row, last)
+                    last -= 1
+                    valid = True
+                else:
+                    if self.board[row][last] != 0:
+                        last -= 1
+                    if current != last:
+                        valid = True
+                    self.move(row, current, row, last)
+            current -= 1
+        return valid
+
+    def check_move_up(self,col):
+        """
+        Slide a single column of tiles upwards, and return whether any tiles were moved.
+        """
+        last = 0
+        current = 1
+        valid = False
+        while (current < self.board_size):
+            #print (self.board[row][current])
+            if self.board[current][col] != 0:
+                if self.board[current][col] == self.board[last][col]:
+                    self.combine(current, col, last, col)
+                    last += 1
+                    valid = True
+                else:
+                    if self.board[last][col] != 0:
+                        last += 1
+                    if current != last:
+                        valid = True
+                    self.move(current, col, last, col)
+            current += 1
+        return valid
+
+    def check_move_down(self,col):
+        """
+        Slide a single column of tiles downwards, and return whether any tiles were moved.
+        """
+        last = self.board_size - 1
+        current = last - 1
+        valid = False
+        while (current >= 0):
+            #print (self.board[row][current])
+            if self.board[current][col] != 0:
+                if self.board[current][col] == self.board[last][col]:
+                    self.combine(current, col, last, col)
+                    last -= 1
+                    valid = True
+                else:
+                    if self.board[last][col] != 0:
+                        last -= 1
+                    if current != last:
+                        valid = True
+
+                    self.move(current, col, last, col)
+            current -= 1
+        return valid
+
+    def combine(self,pos1_row, pos1_col, pos2_row, pos2_col):
+        """
+        Add the item in position 1 to the item in position 2. Sets position 1 to zero.
+        """
+        self.board[pos2_row][pos2_col] += self.board[pos1_row][pos1_col]
+        self.board[pos1_row][pos1_col] = 0
         pass
 
-    def move_left(self,row,current,last):
-        self.board[row][last] = self.board[row][current]
-        self.board[row][current] = 0
+    def move(self,pos1_row, pos1_col, pos2_row, pos2_col):
+        """
+        Move the item in position 1 to position 2. (Overwrite) Sets position 1 to zero.
+        """
+        tmp = self.board[pos1_row][pos1_col]
+        self.board[pos1_row][pos1_col] = 0
+        self.board[pos2_row][pos2_col] = tmp
         pass
 
 
-    def num_rows_move(self):
-        for row in range(0,len(self.board[0])):
-            move_left(self,row)
+    def slide_left(self):
+        valid = False;
+        for row in range(self.board_size):
+            valid = self.check_move_left(row) or valid
+        return valid
+
+    def slide_right(self):
+        valid = False;
+        for row in range(self.board_size):
+            valid = self.check_move_right(row) or valid
+        return valid
+
+    def slide_up(self):
+        valid = False;
+        for col in range(self.board_size):
+            valid = self.check_move_up(col) or valid
+        return valid
+
+    def slide_down(self):
+        valid = False;
+        for col in range(self.board_size):
+            valid = self.check_move_down(col) or valid
+        return valid
+
+    def has_valid_move(self):
+        return has_valid_move(self.board)
 
 
 # Helper functions
