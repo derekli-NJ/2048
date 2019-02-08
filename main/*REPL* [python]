@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/derekli/Documents/2048/main/random_ai.py", line 1, in <module>
+    from ai import AI
+  File "/Users/derekli/Documents/2048/main/ai.py", line 15
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+>>> 
