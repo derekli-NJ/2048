@@ -101,6 +101,7 @@ def test_has_valid_move(game):
 
 
 
+
 # Board modifying methods
 
 def test_spawn_tile(game):
@@ -190,6 +191,8 @@ def test_slide_down(game):
 ##  
 # Run the tests
 ##
+
+
 test_game = Game(0, 4)
 
 

@@ -33,6 +33,7 @@ def isLegal(data):
     return True
 
 
+
 def mousePressed(event,data):
     pass
 
@@ -80,7 +81,6 @@ def drawGameOver(canvas,data):
 def redrawAll(canvas,data):
     # drawStartScreen(canvas,data)
     drawGameBoard(canvas,data)
-
     if data.gameFinished:
         drawGameOver(canvas,data)
 
