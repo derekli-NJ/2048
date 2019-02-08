@@ -32,11 +32,6 @@ def isLegal(data):
                         return False
     return True
 
-                
-# TODO ???
-def runGame():
-    pass
-
 
 def mousePressed(event,data):
     pass
