@@ -10,12 +10,14 @@ class Game(object):
         self.board_size = board_size
         self.four_chance = four_chance
         self.board = [([0] * self.board_size) for i in range(self.board_size)]
+        self.score = 0
         for i in range(0, starting_tiles):
             self.spawn_tile()
     
 
     def get_board(self):
         return self.board
+
 
     def clear_board(self):
         """
@@ -139,6 +141,7 @@ class Game(object):
         """
         self.board[pos2_row][pos2_col] += self.board[pos1_row][pos1_col]
         self.board[pos1_row][pos1_col] = 0
+        self.score += self.board[pos2_row][pos2_col]
         pass
 
     def move(self,pos1_row, pos1_col, pos2_row, pos2_col):
@@ -177,6 +180,10 @@ class Game(object):
 
     def has_valid_move(self):
         return has_valid_move(self.board)
+
+    def get_score(self):
+        return self.score
+
 
 
 # Helper functions

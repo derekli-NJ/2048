@@ -6,6 +6,7 @@ def init(data):
     data.game = Game(0, 4)
     data.width = 400
     data.height = 400
+    data.gameFinished = False
 
 def spawn_piece(data):
     data.game.spawn_tile()
@@ -57,7 +58,7 @@ def keyPressed(event,data):
     if valid:
         spawn_piece(data)
     if not data.game.has_valid_move():
-        sys.exit()
+        data.gameFinished = True
 
 
 def drawGameBoard(canvas,data):
@@ -74,10 +75,19 @@ def drawGameBoard(canvas,data):
             canvas.create_text(data.width * ((2*col+1)/8),data.height * ((2*row+1)/8),
                                    text = str(game_board[row][col]), font = ("Avenir",40))
 
+def drawGameOver(canvas,data):
+    score = data.game.get_score()
+    canvas.create_rectangle(0, 0, data.width, data.height,fill = "darkgray")
+    canvas.create_text(data.width/2,data.height/4,text = "Game Over", font = ("Avenir",40))
+    canvas.create_text(data.width/2,data.height/2,text = "Score: " + str(score), font = ("Avenir",40))
+
 
 def redrawAll(canvas,data):
     # drawStartScreen(canvas,data)
     drawGameBoard(canvas,data)
+
+    if data.gameFinished:
+        drawGameOver(canvas,data)
 
 
 ####################################
