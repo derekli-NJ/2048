@@ -25,12 +25,14 @@ def test_Random_AI(random_ai):
 def test_save_game_data(save_game_data):
     print("Running test_save_game_data")
 
-    board = save_game_data.save_data()[0]
-    move = save_game_data.save_data()[1]
+    saveData = save_game_data.save_data()
+    board = saveData[0]
+    move = saveData[1]
+    save_game_data.write_data_to_file()
     print (board)
     print (move)
 
-    
+
     assert([[[0, 0, 2, 2], [0, 2, 0, 0], [0, 0, 2, 0], [2, 0, 2, 2]]] == board)
 
 
