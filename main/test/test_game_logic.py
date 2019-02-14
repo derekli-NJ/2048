@@ -4,35 +4,9 @@ sys.path.append('../')
 from game_logic import Game
 from game_logic import has_valid_move
 from game_logic import get_empty_squares
+from boardstates_fortesting import *
 import copy
 import functools
-
-empty_board = [[0, 0, 0, 0],
-			   [0, 0, 0, 0],
-			   [0, 0, 0, 0],
-			   [0, 0, 0, 0]]
-
-test_board = [[0, 0, 2, 2],
-			  [0, 2, 0, 0],
-			  [0, 0, 2, 0],
-			  [2, 0, 2, 2]]
-
-stuck_board = [[2, 4, 2, 4],
-			   [4, 8, 4, 2],
-			   [8, 4, 2, 8],
-			   [2, 8, 4, 2]]
-
-almost_stuck_board_1 = [[2, 4, 2, 4],
-						[4, 8, 4, 2],
-						[8, 2, 2, 8],
-						[2, 8, 4, 2]]
-
-almost_stuck_board_2 = [[2, 4, 2, 4],
-						[4, 8, 4, 8],
-						[8, 4, 2, 8],
-						[2, 8, 4, 2]]
-
-empty_squares = [[0, 0], [0, 1], [1, 0], [1, 2], [1, 3], [2, 0], [2, 1], [2, 3], [3, 1]]
 
 
 # Helper functions
@@ -40,11 +14,11 @@ empty_squares = [[0, 0], [0, 1], [1, 0], [1, 2], [1, 3], [2, 0], [2, 1], [2, 3],
 def sum_tiles(board):
 	return functools.reduce(lambda x, y: x + sum(y), board, 0)
 
-def get_test_board():
+def get_test_board(board):
 	"""
 	Get a copy of the test board for testing purposes so we don't mess up tests
 	"""
-	return copy.deepcopy(test_board)
+	return copy.deepcopy(board)
 
 
 # Non board modifying methods (hopefully)
@@ -106,7 +80,7 @@ def test_has_valid_move(game):
 
 def test_spawn_tile(game):
 	print("Running test_spawn_tile...")
-	game.board = get_test_board()
+	game.board = get_test_board(test_board)
 	print("Pre:")
 	print(game.get_board())
 	print("-----")
@@ -128,7 +102,7 @@ def test_spawn_tile(game):
 
 def test_slide_left(game):
 	print("Running test_slide_left...")
-	game.board = get_test_board()
+	game.board = get_test_board(test_board)
 	#target_board = [[4, 0, 0, 0],
 	#				 [2, 0, 0, 0],
 	#				 [2, 0, 0, 0],
@@ -143,7 +117,7 @@ def test_slide_left(game):
 
 def test_slide_right(game):
 	print("Running test_slide_right...")
-	game.board = get_test_board()
+	game.board = get_test_board(test_board)
 	#target_board = [[0, 0, 0, 4],
 	#				 [0, 0, 0, 2],
 	#				 [0, 0, 0, 2],
@@ -158,7 +132,7 @@ def test_slide_right(game):
 
 def test_slide_up(game):
 	print("Running test_slide_up...")
-	game.board = get_test_board()
+	game.board = get_test_board(test_board)
 	#target_board = [[2, 2, 4, 4],
 	#				 [0, 0, 2, 0],
 	#				 [0, 0, 0, 0],
@@ -174,7 +148,7 @@ def test_slide_up(game):
 
 def test_slide_down(game):
 	print("Running test_slide_down...")
-	game.board = get_test_board()
+	game.board = get_test_board(test_board)
 	#target_board = [[0, 0, 0, 0],
 	#				 [0, 0, 0, 0],
 	#				 [0, 0, 2, 0],
