@@ -18,3 +18,4 @@ def rotate_board(board, amount=1):
     amount = amount % 4
     if amount == 2:
         return list(x[::-1] for x in board)[::-1]
+    return board

@@ -37,12 +37,11 @@ def test_rotate_move():
 
 def test_rotate_board():
     print("Running test_rotate_board...")
-
     result_board_1 = rotate_board(test_board, 2);
-    assert(result_board_1[0]==[4,2,0,0])
-    assert(result_board_1[1]==[8,4,4,4])
-    assert(result_board_1[2]==[8,2,0,0])
-    assert(result_board_1[3]==[4,8,2,0])
+    assert(result_board_1[0]==[2,2,0,2])
+    assert(result_board_1[1]==[0,2,0,0])
+    assert(result_board_1[2]==[0,0,2,0])
+    assert(result_board_1[3]==[2,2,0,0])
 
     result_board_2 = rotate_board(test_board_2, 2);
     assert(result_board_2[0]==[4,2,0,0])
