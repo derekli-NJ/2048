@@ -33,8 +33,8 @@ def rotate_board(board, amount=1):
 
     # Special casing because there isn't really a point not to
     if amount == 1:
-        # Reverse every row, and then flip it 45 degrees.
-        return [list(x) for x in zip(*[x[::-1] for x in board])]
+        # Flip the board 45 degrees, then reverse the order of rows.
+        return [list(x) for x in zip(*board)][::-1]
     if amount == 2:
         # Reverse the order of rows, then reverse every row.
         return [x[::-1] for x in board][::-1]
