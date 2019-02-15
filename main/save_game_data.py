@@ -35,15 +35,3 @@ class Save_Game_Data(object):
         for line in self.readTxtFile:
             print (line)
         pass
-
-
-
-
-
-
-
-
-
-
-
-
