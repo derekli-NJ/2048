@@ -1,5 +1,6 @@
 import pandas as pd
 import board_transform as tf
+import re
 
 class DataStorage(object):
 
@@ -70,8 +71,11 @@ def string_to_state(board_string):
     """
 
     # For each row (splitting by '],'): Remove brackets, and then split by commas.
+    #       re.sub(regex, replace, target): Returns the result of replacing every 
+    #               instance of 'regex' in 'target' with 'replace'.
+    #               In this case, replace any of '[' or ']' with ''.
     # For each item in the resulting split: That corresponds to one item in the final board.
-    return [[int(x) for x in row.replace("]","").replace("[","").split(",")] for row in board_string.split("],")]
+    return [[int(x) for x in re.sub(r'[\]\[]','',row).split(",")] for row in board_string.split("],")]
 
 
 
