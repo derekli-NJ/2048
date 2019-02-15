@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 
-from game_data_storage import DataStorage, state_to_string
+from game_data_storage import DataStorage, state_to_string, string_to_state
 from boardstates_fortesting import *
 from board_transform import Move
 
@@ -9,6 +9,16 @@ def test_state_to_string():
     print("Running test_state_to_string...")
     assert state_to_string(test_board) == "[[0, 0, 2, 2], [0, 2, 0, 0], [0, 0, 2, 0], [2, 0, 2, 2]]", "Somehow failed tostring"
     print("Passed test_state_to_string!")
+
+def test_string_to_state():
+    print("Running test_string_to_state...")
+    recover = string_to_state("[[0, 0, 2, 2], [0, 2, 0, 0], [0, 0, 2, 0], [2, 0, 2, 2]]")
+    assert recover[0] == test_board[0]
+    assert recover[1] == test_board[1]
+    assert recover[2] == test_board[2]
+    assert recover[3] == test_board[3]
+    print("Passed test_string_to_state!")
+
 
 def test_add_game_data(storage):
     print("Running test_add_game_data...")
@@ -82,6 +92,7 @@ def test_write_data(storage):
 storage = DataStorage()
 
 test_state_to_string()
+test_string_to_state()
 test_add_game_data(storage)
 test_sort_data(storage)
 test_write_data(storage)

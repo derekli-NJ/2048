@@ -64,8 +64,14 @@ def state_to_string(board_state):
     """
     return str(board_state)
 
+def string_to_state(board_string):
+    """
+    Convert a string to a boardstate, for reading.
+    """
 
-
+    # For each row (splitting by '],'): Remove brackets, and then split by commas.
+    # For each item in the resulting split: That corresponds to one item in the final board.
+    return [[int(x) for x in row.replace("]","").replace("[","").split(",")] for row in board_string.split("],")]
 
 
 
