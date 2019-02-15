@@ -9,16 +9,11 @@ import copy
 
 def test_Random_AI(random_ai):
     print("Running test_Random_AI...")
-    a = ["Left","Right","Up","Down"]
+    a = [0, 1, 2, 3]
 
-    move = random_ai.get_random_move()
+    move = random_ai.get_move()
     assert(a.__contains__(move))
 
-    # boardAndMove = random_ai.save_game_data()
-    # boardState = boardAndMove[0]
-    # moveSave = boardAndMove[1]
-    # print(boardState)
-    # print(moveSave)
 
     print("Passed!")
 
