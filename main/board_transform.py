@@ -8,6 +8,10 @@ class Move(Enum):
     DOWN = 2
     RIGHT = 3
 
+def get_all_moves():
+    # get all possible moves from above
+    return [move.value for move in Move]
+
 def rotate_move(move, amount=1):
 	"""
 	Rotates a given move by the specified amount. (default 1)
