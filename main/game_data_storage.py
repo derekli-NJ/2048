@@ -45,3 +45,10 @@ def state_to_string(board_state):
     Convert a boardstate to a string, for hashing.
     """
     return str(board_state)
+
+
+
+
+
+
+    

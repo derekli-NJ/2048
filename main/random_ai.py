@@ -1,10 +1,11 @@
 import random
 from board_transform import Move
+import board_transform
 
 class Random_AI(object):
 
-    def __init__(self, board):
-        self.board = board
+    def __init__(self):
+        # self.board = board
         # self.moves = ["Left","Right","Up","Down"]
         # self.checkMoves = [game.check_move_up()]
         self.boardState = []
@@ -25,10 +26,10 @@ class Random_AI(object):
     #     self.moveMade.append(self.get_random_move())
     #     return (self.boardState, self.moveMade)
 
-    def get_random_move(self):
+    def get_move(self, board):
         foundValidMove = False
         # while (foundValidMove):
-        moveInd = random.randint(0,len(Move) - 1)
+        moveInd = random.randint(0,4 - 1)
         # has_valid_move(game.get_board())
         self.moveChoice = board_transform.get_all_moves()[moveInd]
 
@@ -36,6 +37,12 @@ class Random_AI(object):
 
     def get_move_priorities():
         pass
+
+
+
+
+
+
 
 
 
